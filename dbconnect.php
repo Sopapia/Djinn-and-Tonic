@@ -14,7 +14,7 @@
 	}
 
 	// Define the SQL query to run (replace these values as well)
-	$sql = "SELECT * FROM Schema.Tablename";
+	$sql = "SELECT * FROM pg_tables";
 
         // Run the SQL query
 	$result = pg_query($dbhost, $sql);

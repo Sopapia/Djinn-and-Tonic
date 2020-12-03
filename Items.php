@@ -17,7 +17,7 @@
               <a class="nav-link" href="index.html">Home</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="Items.html">Items</a>
+              <a class="nav-link" href="Items.php">Items</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="myitems.html">MyItems</a>
@@ -25,20 +25,57 @@
             <li class="nav-item">
               <a class="nav-link" href="profile.html">Profile</a>
             </li>
-            <li>
-              <form class="form-inline" action="dbconnect.php">
-                <input class="form-control mr-sm-2" type="text" placeholder="Search">
-                <button class="btn btn-success" type="submit">Search</button>
-              </form>
-            </li>
           </ul>
         </nav>
 
      <div class="jumbotron">
        <h1 class="display-3">Djinn and Tonic</h1>
-       <p class="lead">For all your potion needs</p>
+       <p class="lead">Item Search</p>
        <hr class="my-2">
+       <form class="form-inline" action="Items.php">
+        <input class="form-control mr-sm-2" type="text" placeholder="Search" name="search">
+        <button class="btn btn-success" type="submit">Search</button>
+      </form>
      </div>
+
+     <?php
+	// Make a connection to the database
+        // The values here MUST BE CHANGED to match the database and credentials you wish to use
+	$dbhost = pg_connect("host=hostname dbname=databasename user=username password=password");
+
+	// If the $dbhost variable is not defined, there was an error
+	if(!$dbhost)
+	{
+		die("Error: ".pg_last_error());
+	}
+
+	// Define the SQL query to run (replace these values as well)
+	$sql = "SELECT * FROM pg_tables";
+
+        // Run the SQL query
+	$result = pg_query($dbhost, $sql);
+
+        // If the $result variable is not defined, there was an error in the query
+	if (!$result)
+	{
+		die("Error in query: ".pg_last_error());
+	}
+
+	// Iterate through each row of the result 
+	while ($row = pg_fetch_array($result))
+	{
+		// Write HTML to the page, replace this with whatever you wish to do with the data
+		echo $row[0]."<br/>\n";
+	}
+
+	// Free the result from memory
+	pg_free_result($result);
+
+	// Close the database connection
+	pg_close($dbhost);
+?>
+
+
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
