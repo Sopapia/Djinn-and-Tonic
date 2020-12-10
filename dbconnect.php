@@ -30,6 +30,7 @@
 	      // Make a connection to the database
         // The values here MUST BE CHANGED to match the database and credentials you wish to use
         //$dbhost = pg_connect("host=hostname dbname=databasename user=username password=password");
+        session_start();
         $myfile = fopen("./pg_connection_info.txt", "r") or die("Unable to open \"./pg_connection_info.txt\" file!");
         $my_host = fgets($myfile);
         $my_dbname = fgets($myfile);
@@ -50,7 +51,13 @@
 
               // Run the SQL query
         $result = pg_query($dbhost, $sql);
-
+        function pre_r( $array ) {
+            echo '<pre>';
+            print_r($array);
+            echo '</pre>';
+        }
+        //pre_r($result);
+        pre_r($result->fetch_assoc());
               // If the $result variable is not defined, there was an error in the query
         if (!$result)
         {
@@ -69,7 +76,48 @@
 
         // Close the database connection
         pg_close($dbhost);
-      ?>
 
+        // Need user info for supplier id
+        if (isset($_POST['save'])){
+            $name = $_POST['itemName'];
+            $price = $_POST['itemPrice'];
+            $type = $_POST['itemType'];
+            // unfinished query
+            $sql = "INSERT INTO Item (ItemName, ItemPrice, ItemTypeID) VALUES('$name', '$price', '$type')";
+            pg_query($dbhost, $sql);
+        }
+        if (isset($_POST['login'])){
+            $username = $_POST['userName'];
+            $password = $_POST['password'];
+            $SQL = "SELECT UserID, Password FROM Client WHERE UserID='$username' AND Password='$password'";
+
+            $result = pg_query($dbhost, $sql);
+            $count = pg_num_rows($result);
+            if ($count == 1){
+                $_SESSION['username'] = $username;
+                $_SESSION['logged_in'] = true;
+                echo "<h1><center>You have successfully logged in!</center></h1>";
+            } else {
+                echo "<h1>Sorry, invalid username or password.</h1>";
+            }
+        }
+        if (isset($_POST['register'])){
+            $username = $_POST['userName'];
+            $password = $_POST['password'];
+            $fName = $_POST['fName'];
+            $lName = $_POST['lName'];
+            $sql = "SELECT UserID from Client WHERE UserID='$username'";
+            $result = pg_query($dbhost, $sql);
+            $count = pg_num_rows($result);
+            if ($count > 0){
+                echo "<h1>Sorry, this username is taken.</h1>";
+            }
+            else {
+                $sql = "INSERT INTO Client (FirstName, LastName, Username, Password) VALUES('$fName', '$lName', '$username', '$password')";
+                pg_query($dbhost, $sql);
+            }
+        }
+      ?>
+    
 </body>
 </html>

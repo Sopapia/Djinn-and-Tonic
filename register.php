@@ -25,8 +25,6 @@
             <li class="nav-item">
               <a class="nav-link" href="profile.php">Profile</a>
             </li>
-            <li>
-            </li>
           </ul>
         </nav>
 
@@ -34,17 +32,18 @@
        <h1 class="display-3">Djinn and Tonic</h1>
        <p class="lead">For all your potion needs</p>
        <hr class="my-2">
-       <form class="form-inline" action="dbconnect.php" method="POST">
-        <input class="form-control mr-sm-2" type="text" placeholder="Item Name" name="itemName">
-        <input class="form-control mr-sm-2" type="text" placeholder="Item Price" name="itemPrice" step="0.1">
-        <input class="form-control mr-sm-2" type="radio" placeholder="Potion" id="itemPotion" name="itemType" value=0>
-        <label for="radio">Potion</label>
-        <input class="form-control mr-sm-2" type="radio" placeholder="Ingredient" id="itemIngredient" name="itemType" value=1>
-        <label for="radio">Ingredient</label>
-        <button name="sell" class="btn btn-success" type="submit">Sell</button>
-      </form>
      </div>
 
+
+        <div class="jumbotron">
+            <form class="form-inline" action="dbconnect.php" method="POST">
+                <input class="form-control mr-sm-2" type="text" placeholder="Username" name="userName">
+                <input class="form-control mr-sm-2" type="text" placeholder="Password" name="password">
+                <input class="form-control mr-sm-2" type="text" placeholder="First Name" name="fName">
+                <input class="form-control mr-wm-2" type="text" placeholder="Last Name" name="lName">
+                <button name="Register" class="btn btn-success" type="submit">Register</button>
+            </form>
+     </div>
      <?php
 	      // Make a connection to the database
         // The values here MUST BE CHANGED to match the database and credentials you wish to use
@@ -65,11 +64,10 @@
         }
 
         // Define the SQL query to run (replace these values as well)
-        //$sql = "SELECT * FROM pg_tables";
-        $sql = "SELECT * FROM Item";
+        $sql = "SELECT * FROM pg_tables";
+
               // Run the SQL query
         $result = pg_query($dbhost, $sql);
-
 
               // If the $result variable is not defined, there was an error in the query
         if (!$result)
@@ -90,8 +88,6 @@
         // Close the database connection
         pg_close($dbhost);
       ?>
-
-
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
