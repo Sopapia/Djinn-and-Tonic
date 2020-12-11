@@ -44,6 +44,7 @@
        <form class="form-inline" action="dbconnect.php" method="POST">
         <input class="form-control mr-sm-2" type="text" placeholder="Item Name" name="itemName">
         <input class="form-control mr-sm-2" type="text" placeholder="Item Price" name="itemPrice" step="0.1">
+        <input class="form-control mr-sm-2" type="text" placeholder="Item Desc" name="itemDesc">
         <input class="form-control mr-sm-2" type="radio" placeholder="Potion" id="itemPotion" name="itemType" value=0>
         <label for="radio">Potion</label>
         <input class="form-control mr-sm-2" type="radio" placeholder="Ingredient" id="itemIngredient" name="itemType" value=1>
