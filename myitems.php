@@ -25,7 +25,14 @@
             <li class="nav-item">
               <a class="nav-link" href="profile.php">Profile</a>
             </li>
-            <li>
+            <li class="nav-item">
+              <a class="nav-link" href="login.php">Login</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="logout.php">Logout</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="register.php">Register</a>
             </li>
           </ul>
         </nav>

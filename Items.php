@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="styles.css">
   </head>
   <body>
-        <nav class="navbar navbar-expand-sm bg-dark navbar-dark sticky-top">
+      <nav class="navbar navbar-expand-sm bg-dark navbar-dark sticky-top">
           <ul class="navbar-nav">
             <li class="nav-item">
               <a class="nav-link" href="index.php">Home</a>
@@ -24,6 +24,15 @@
             </li>
             <li class="nav-item">
               <a class="nav-link" href="profile.php">Profile</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="login.php">Login</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="logout.php">Logout</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="register.php">Register</a>
             </li>
           </ul>
         </nav>
