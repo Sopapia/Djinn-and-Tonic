@@ -11,7 +11,6 @@
     <link rel="stylesheet" href="styles.css">
   </head>
   <body>
-              <a class="nav-link" href="profile.php">Profile</a>
     <nav class="navbar navbar-expand-sm bg-dark navbar-dark sticky-top">
         <ul class="navbar-nav">
           <li class="nav-item">
@@ -84,6 +83,7 @@
 
         $arr = pg_fetch_all($result);
 
+        echo("<table class='table table-striped'><tbody>");
         $total=count($arr);
         for($i=0; $i<$total; $i++){
           $itemName = $arr[$i]['itemname'];
@@ -92,12 +92,18 @@
           $typeName = $arr[$i]['typename'];
           
           //Sander, use the above variables to make it look nice :)
-          echo($itemName." ");
-          echo($itemDesc." ");
-          echo($itemPrice." ");
-          echo($typeName." ");
-          echo("--------------");
+          
+          echo("<tr><td scope='row'>". $itemName . "</td><td>" . $itemDesc . "</td><td>" . "Price: " . $itemPrice . "</td><td>" . $typeName . "</td>");
+          
+
+          // echo($itemName." ");
+          // echo($itemDesc." ");
+          // echo($itemPrice." ");
+          // echo($typeName." ");
+          // echo("--------------");
         }
+        echo("</tbody></table>");
+
 
         // Free the result from memory
         pg_free_result($result);

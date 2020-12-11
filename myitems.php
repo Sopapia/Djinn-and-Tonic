@@ -39,7 +39,7 @@
 
      <div class="jumbotron">
        <h1 class="display-3">Djinn and Tonic</h1>
-       <p class="lead">For all your potion needs</p>
+       <p class="lead">Sell Items</p>
        <hr class="my-2">
        <form class="form-inline" action="dbconnect.php" method="POST">
         <input class="form-control mr-sm-2" type="text" placeholder="Item Name" name="itemName">
