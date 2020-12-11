@@ -68,7 +68,7 @@
         }
 
         // Define the SQL query to run (replace these values as well)
-        $sql = "SELECT i.ItemName, i.ItemPrice, i.ItemDesc, it.TypeName FROM Item i
+        $sql = "SELECT i.ItemName, i.ItemPrice, i.ItemDesc, it.TypeName, i.ItemID FROM Item i
                 JOIN ItemType it on it.ItemTypeID = i.ItemTypeID
                 WHERE LOWER(i.ItemName) LIKE '%".strtolower($_POST['search'])."%'
                 ORDER BY i.ItemTypeID";
@@ -87,24 +87,28 @@
         echo("<table class='table table-striped'><tbody>");
         $total=count($arr);
         for($i=0; $i<$total; $i++){
+	        $itemID = $arr[$i]['itemid'];
           $itemName = $arr[$i]['itemname'];
           $itemDesc = $arr[$i]['itemdesc'];  
           $itemPrice = $arr[$i]['itemprice'];
           $typeName = $arr[$i]['typename'];
           
-          //Sander, use the above variables to make it look nice :)
-          
           echo("<tr><td scope='row'>". $itemName . "</td><td>" . $itemDesc . "</td><td>" . "Price: " . $itemPrice . "</td><td>" . $typeName . "</td><td>
-          <form class='form-inline' action='Items.php' method='post'><button class='btn btn-success' type='submit'>Buy</button></form>");
+          <form class='form-inline' action='Items.php' method='post'>
+            <button class='btn btn-success' name='buy' type='buy'>Buy</button>
+            <input type='hidden' name='eventid' value=".$itemID.">
+          </form>");
           
-
-          // echo($itemName." ");
-          // echo($itemDesc." ");
-          // echo($itemPrice." ");
-          // echo($typeName." ");
-          // echo("--------------");
+          
+          
         }
         echo("</tbody></table>");
+
+        if(isset($_POST['buy'])){
+          $sql = 'DELETE FROM Item i WHERE i.ItemID = '.$_POST['eventid'];
+          pg_query($sql);          
+          header("Refresh:0");
+        }
 
 
         // Free the result from memory
