@@ -11,37 +11,38 @@
     <link rel="stylesheet" href="styles.css">
   </head>
   <body>
-      <nav class="navbar navbar-expand-sm bg-dark navbar-dark sticky-top">
-          <ul class="navbar-nav">
-            <li class="nav-item">
-              <a class="nav-link" href="index.php">Home</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="Items.php">Items</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="myitems.php">MyItems</a>
-            </li>
-            <li class="nav-item">
               <a class="nav-link" href="profile.php">Profile</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="login.php">Login</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="logout.php">Logout</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="register.php">Register</a>
-            </li>
-          </ul>
-        </nav>
+    <nav class="navbar navbar-expand-sm bg-dark navbar-dark sticky-top">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link" href="index.php">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="Items.php">Items</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="myitems.php">MyItems</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="profile.php">Profile</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="login.php">Login</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="logout.php">Logout</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="register.php">Register</a>
+          </li>
+        </ul>
+    </nav>
 
      <div class="jumbotron">
        <h1 class="display-3">Djinn and Tonic</h1>
        <p class="lead">Item Search</p>
        <hr class="my-2">
-       <form class="form-inline" action="dbconnect.php">
+       <form class="form-inline" action="Items.php" method="post">
         <input class="form-control mr-sm-2" type="text" placeholder="Search" name="search">
         <button class="btn btn-success" type="submit">Search</button>
       </form>
@@ -67,7 +68,10 @@
         }
 
         // Define the SQL query to run (replace these values as well)
-        $sql = "SELECT * FROM pg_tables";
+        $sql = "SELECT i.ItemName, i.ItemPrice, i.ItemDesc, it.TypeName FROM Item i
+                JOIN ItemType it on it.ItemTypeID = i.ItemTypeID
+                WHERE LOWER(i.ItemName) LIKE '%".strtolower($_POST['search'])."%'
+                ORDER BY i.ItemTypeID";
 
               // Run the SQL query
         $result = pg_query($dbhost, $sql);
@@ -78,11 +82,21 @@
           die("Error in query: ".pg_last_error());
         }
 
-        // Iterate through each row of the result 
-        while ($row = pg_fetch_array($result))
-        {
-          // Write HTML to the page, replace this with whatever you wish to do with the data
-          echo $row[0]."<br/>\n";
+        $arr = pg_fetch_all($result);
+
+        $total=count($arr);
+        for($i=0; $i<$total; $i++){
+          $itemName = $arr[$i]['itemname'];
+          $itemDesc = $arr[$i]['itemdesc'];  
+          $itemPrice = $arr[$i]['itemprice'];
+          $typeName = $arr[$i]['typename'];
+          
+          //Sander, use the above variables to make it look nice :)
+          echo($itemName." ");
+          echo($itemDesc." ");
+          echo($itemPrice." ");
+          echo($typeName." ");
+          echo("--------------");
         }
 
         // Free the result from memory
