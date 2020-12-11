@@ -47,6 +47,7 @@
       </form>
      </div>
 
+
      <?php
 	      // Make a connection to the database
         // The values here MUST BE CHANGED to match the database and credentials you wish to use
@@ -93,7 +94,8 @@
           
           //Sander, use the above variables to make it look nice :)
           
-          echo("<tr><td scope='row'>". $itemName . "</td><td>" . $itemDesc . "</td><td>" . "Price: " . $itemPrice . "</td><td>" . $typeName . "</td>");
+          echo("<tr><td scope='row'>". $itemName . "</td><td>" . $itemDesc . "</td><td>" . "Price: " . $itemPrice . "</td><td>" . $typeName . "</td><td>
+          <form class='form-inline' action='Items.php' method='post'><button class='btn btn-success' type='submit'>Buy</button></form>");
           
 
           // echo($itemName." ");
