@@ -65,16 +65,12 @@
 
         // Define the SQL query to run (replace these values as well)
         //$sql = "SELECT * FROM pg_tables";
-        $sql = "SELECT * FROM Item";
+        $sql = "";
               // Run the SQL query
         $result = pg_query($dbhost, $sql);
 
 
               // If the $result variable is not defined, there was an error in the query
-        if (!$result)
-        {
-          die("Error in query: ".pg_last_error());
-        }
 
         // Iterate through each row of the result 
         while ($row = pg_fetch_array($result))

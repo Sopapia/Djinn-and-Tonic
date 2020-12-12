@@ -68,7 +68,6 @@
             $username = $_POST['userName'];
             $password = $_POST['password'];
             $sql = "SELECT * FROM Client WHERE UserName='$username' AND Password='$password'";
-            echo("SELECT * FROM Client WHERE UserName='$username' AND Password='$password'");
 
             $result = pg_query($dbhost, $sql);
             $count = pg_num_rows($result);

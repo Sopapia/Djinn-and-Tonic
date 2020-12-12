@@ -115,6 +115,14 @@
         // Close the database connection
         pg_close($dbhost);
       ?>
+      
+      A great query     vvvvvv
+        <br>
+      SELECT i.ItemName, i.ItemPrice, i.ItemDesc, it.TypeName, i.ItemID FROM Item i
+                JOIN ItemType it on it.ItemTypeID = i.ItemTypeID
+                WHERE LOWER(i.ItemName) LIKE '%".strtolower($_POST['search'])."%'
+                ORDER BY i.ItemTypeID
+
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
