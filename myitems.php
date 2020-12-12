@@ -41,13 +41,13 @@
        <h1 class="display-3">Djinn and Tonic</h1>
        <p class="lead">Sell Items</p>
        <hr class="my-2">
-       <form class="form-inline" action="dbconnect.php" method="POST">
+       <form class="form-inline" method="POST">
         <input class="form-control mr-sm-2" type="text" placeholder="Item Name" name="itemName">
         <input class="form-control mr-sm-2" type="text" placeholder="Item Price" name="itemPrice" step="0.1">
         <input class="form-control mr-sm-2" type="text" placeholder="Item Desc" name="itemDesc">
-        <input class="form-control mr-sm-2" type="radio" placeholder="Potion" id="itemPotion" name="itemType" value=0>
+        <input class="form-control mr-sm-2" type="radio" placeholder="Potion" id="itemPotion" name="itemType" value=1>
         <label for="radio">Potion</label>
-        <input class="form-control mr-sm-2" type="radio" placeholder="Ingredient" id="itemIngredient" name="itemType" value=1>
+        <input class="form-control mr-sm-2" type="radio" placeholder="Ingredient" id="itemIngredient" name="itemType" value=2>
         <label for="radio">Ingredient</label>
         <button name="sell" class="btn btn-success" type="submit">Sell</button>
       </form>
@@ -72,25 +72,23 @@
           die("Error: ".pg_last_error());
         }
 
-        // Define the SQL query to run (replace these values as well)
-        //$sql = "SELECT * FROM pg_tables";
-        $sql = "SELECT * FROM Item";
-              // Run the SQL query
-        $result = pg_query($dbhost, $sql);
-
-
-              // If the $result variable is not defined, there was an error in the query
-        if (!$result)
+        if(isset($_POST['sell']))
         {
-          die("Error in query: ".pg_last_error());
+          echo("Item added successfully!");
+          
+          $sql = "INSERT INTO Item(ItemName, ItemDesc, ItemPrice, ItemTypeID, SupplierID)
+          VALUES ('". $_POST['itemName'] ."', 
+          '". $_POST['itemDesc'] ."',
+          ". $_POST['itemPrice'] .",
+          ". $_POST['itemType'] .",
+          1)";
+          
+          pg_query($sql);  
         }
 
-        // Iterate through each row of the result 
-        while ($row = pg_fetch_array($result))
-        {
-          // Write HTML to the page, replace this with whatever you wish to do with the data
-          echo $row[0]."<br/>\n";
-        }
+
+        
+
 
         // Free the result from memory
         pg_free_result($result);
