@@ -46,7 +46,7 @@
                 <input class="form-control mr-sm-2" type="text" placeholder="Password" name="password">
                 <input class="form-control mr-sm-2" type="text" placeholder="First Name" name="fName">
                 <input class="form-control mr-wm-2" type="text" placeholder="Last Name" name="lName">
-                <button name="Register" class="btn btn-success" type="submit">Register</button>
+                <button name="reg" class="btn btn-success" type="submit">Register</button>
             </form>
      </div>
 
@@ -70,7 +70,7 @@
           die("Error: ".pg_last_error());
         }
 
-        if (isset($_POST['register'])){
+        if (isset($_POST['reg'])){
             $username = $_POST['userName'];
             $password = $_POST['password'];
             $fName = $_POST['fName'];

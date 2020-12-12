@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="styles.css">
   </head>
   <body>
-    <nav class="navbar navbar-expand-sm bg-dark navbar-dark sticky-top">
+        <nav class="navbar navbar-expand-sm bg-dark navbar-dark sticky-top">
           <ul class="navbar-nav">
             <li class="nav-item">
               <a class="nav-link" href="index.php">Home</a>
@@ -41,11 +41,11 @@
        <h1 class="display-3">Djinn and Tonic</h1>
        <p class="lead">Login</p>
        <hr class="my-2">
-       <form class="form-inline" action="login.php" method="POST">
-                <input class="form-control mr-sm-2" type="text" placeholder="Username" name="userName">
-                <input class="form-control mr-sm-2" type="text" placeholder="Password" name="password">
-                <button name="login" class="btn btn-success" type="submit">Login</button>
-            </form>
+          <form class="form-inline" action="login.php" method="POST">
+            <input class="form-control mr-sm-2" type="text" placeholder="Username" name="userName">
+            <input class="form-control mr-sm-2" type="text" placeholder="Password" name="password">
+            <button name="login" class="btn btn-success" type="submit">Login</button>
+          </form>
      </div>
      <?php	
         session_start();
@@ -70,7 +70,8 @@
         if (isset($_POST['login'])){
             $username = $_POST['userName'];
             $password = $_POST['password'];
-            $SQL = "SELECT UserID, Password FROM Client WHERE UserID='$username' AND Password='$password'";
+            $sql = "SELECT * FROM Client WHERE UserName='$username' AND Password='$password'";
+            echo("SELECT * FROM Client WHERE UserName='$username' AND Password='$password'");
 
             $result = pg_query($dbhost, $sql);
             $count = pg_num_rows($result);
