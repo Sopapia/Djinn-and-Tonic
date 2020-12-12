@@ -20,9 +20,6 @@
             <li class="nav-item">
               <a class="nav-link" href="myitems.php">Sell</a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="profile.php">Profile</a>
-            </li>
           </ul>
         </nav>
 
