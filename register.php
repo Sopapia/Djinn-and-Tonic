@@ -41,16 +41,17 @@
        <h1 class="display-3">Djinn and Tonic</h1>
        <p class="lead">Register New Account</p>
        <hr class="my-2">
-       <form class="form-inline" action="dbconnect.php" method="POST">
+       <form class="form-inline" action="register.php" method="POST">
                 <input class="form-control mr-sm-2" type="text" placeholder="Username" name="userName">
                 <input class="form-control mr-sm-2" type="text" placeholder="Password" name="password">
                 <input class="form-control mr-sm-2" type="text" placeholder="First Name" name="fName">
                 <input class="form-control mr-wm-2" type="text" placeholder="Last Name" name="lName">
-                <button name="Register" class="btn btn-success" type="submit">Register</button>
+                <button name="reg" class="btn btn-success" type="submit">Register</button>
             </form>
      </div>
 
      <?php
+        session_start();
 	      // Make a connection to the database
         // The values here MUST BE CHANGED to match the database and credentials you wish to use
         //$dbhost = pg_connect("host=hostname dbname=databasename user=username password=password");
@@ -69,31 +70,23 @@
           die("Error: ".pg_last_error());
         }
 
-        // Define the SQL query to run (replace these values as well)
-        //$sql = "SELECT * FROM pg_tables";
-        $sql = "SELECT * FROM Item";
-              // Run the SQL query
-        $result = pg_query($dbhost, $sql);
-
-
-              // If the $result variable is not defined, there was an error in the query
-        if (!$result)
-        {
-          die("Error in query: ".pg_last_error());
+        if (isset($_POST['reg'])){
+            $username = $_POST['userName'];
+            $password = $_POST['password'];
+            $fName = $_POST['fName'];
+            $lName = $_POST['lName'];
+            $sql = "SELECT UserID from Client WHERE UserID='$username'";
+            $result = pg_query($dbhost, $sql);
+            $count = pg_num_rows($result);
+            if ($count > 0){
+                echo "<h1>Sorry, this username is taken.</h1>";
+            }
+            else {
+                $sql = "INSERT INTO Client (FirstName, LastName, Username, Password) 
+                    VALUES('". $fName ."', '". $lName ."', '". $username ."', '". $password ."')";
+                pg_query($dbhost, $sql);
+            }
         }
-
-        // Iterate through each row of the result 
-        while ($row = pg_fetch_array($result))
-        {
-          // Write HTML to the page, replace this with whatever you wish to do with the data
-          echo $row[0]."<br/>\n";
-        }
-
-        // Free the result from memory
-        pg_free_result($result);
-
-        // Close the database connection
-        pg_close($dbhost);
       ?>
     
 

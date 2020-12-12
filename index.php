@@ -47,6 +47,7 @@
      <img src="https://cdn.discordapp.com/attachments/760546555282980935/787020724328988742/g2dw0oe1ym141.png" class="rounded float-left" alt="potion">
 
      <?php
+        session_start();
 	      // Make a connection to the database
         // The values here MUST BE CHANGED to match the database and credentials you wish to use
         //$dbhost = pg_connect("host=hostname dbname=databasename user=username password=password");

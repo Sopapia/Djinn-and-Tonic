@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="styles.css">
   </head>
   <body>
-    <nav class="navbar navbar-expand-sm bg-dark navbar-dark sticky-top">
+        <nav class="navbar navbar-expand-sm bg-dark navbar-dark sticky-top">
           <ul class="navbar-nav">
             <li class="nav-item">
               <a class="nav-link" href="index.php">Home</a>
@@ -41,13 +41,49 @@
        <h1 class="display-3">Djinn and Tonic</h1>
        <p class="lead">Login</p>
        <hr class="my-2">
-       <form class="form-inline" action="dbconnect.php" method="POST">
-                <input class="form-control mr-sm-2" type="text" placeholder="Username" name="userName">
-                <input class="form-control mr-sm-2" type="text" placeholder="Password" name="password">
-                <button name="login" class="btn btn-success" type="submit">Login</button>
-            </form>
+          <form class="form-inline" action="login.php" method="POST">
+            <input class="form-control mr-sm-2" type="text" placeholder="Username" name="userName">
+            <input class="form-control mr-sm-2" type="text" placeholder="Password" name="password">
+            <button name="login" class="btn btn-success" type="submit">Login</button>
+          </form>
      </div>
+     <?php	
+        session_start();
+	      // Make a connection to the database	
+        // The values here MUST BE CHANGED to match the database and credentials you wish to use	
+        //$dbhost = pg_connect("host=hostname dbname=databasename user=username password=password");	
+        $myfile = fopen("./pg_connection_info.txt", "r") or die("Unable to open \"./pg_connection_info.txt\" file!");	
+        $my_host = fgets($myfile);	
+        $my_dbname = fgets($myfile);	
+        $my_user = fgets($myfile);	
+        $my_password = fgets($myfile);	
+        fclose($myfile);	
+        $dbhost = pg_connect("host=$my_host dbname=$my_dbname user=$my_user password=$my_password");	
 
+
+        // If the $dbhost variable is not defined, there was an error	
+        if(!$dbhost)	
+        {	
+          die("Error: ".pg_last_error());	
+        }	
+
+        if (isset($_POST['login'])){
+            $username = $_POST['userName'];
+            $password = $_POST['password'];
+            $sql = "SELECT * FROM Client WHERE UserName='$username' AND Password='$password'";
+            echo("SELECT * FROM Client WHERE UserName='$username' AND Password='$password'");
+
+            $result = pg_query($dbhost, $sql);
+            $count = pg_num_rows($result);
+            if ($count == 1){
+                $_SESSION['username'] = $username;
+                $_SESSION['logged_in'] = true;
+                echo "<h1><center>You have successfully logged in!</center></h1>";
+            } else {
+                echo "<h1>Sorry, invalid username or password.</h1>";
+            }
+        }
+      ?>
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
