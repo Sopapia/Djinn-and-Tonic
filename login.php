@@ -42,6 +42,7 @@
                 <button name="login" class="btn btn-success" type="submit">Login</button>
             </form>
      </div>
+<<<<<<< Updated upstream
      <?php
 	      // Make a connection to the database
         // The values here MUST BE CHANGED to match the database and credentials you wish to use
@@ -82,9 +83,46 @@
 
         // Free the result from memory
         pg_free_result($result);
+=======
+     <?php	
+        session_start();
+	      // Make a connection to the database	
+        // The values here MUST BE CHANGED to match the database and credentials you wish to use	
+        //$dbhost = pg_connect("host=hostname dbname=databasename user=username password=password");	
+        $myfile = fopen("./pg_connection_info.txt", "r") or die("Unable to open \"./pg_connection_info.txt\" file!");	
+        $my_host = fgets($myfile);	
+        $my_dbname = fgets($myfile);	
+        $my_user = fgets($myfile);	
+        $my_password = fgets($myfile);	
+        fclose($myfile);	
+        $dbhost = pg_connect("host=$my_host dbname=$my_dbname user=$my_user password=$my_password");	
+>>>>>>> Stashed changes
 
         // Close the database connection
         pg_close($dbhost);
+      ?>
+
+        // If the $dbhost variable is not defined, there was an error	
+        if(!$dbhost)	
+        {	
+          die("Error: ".pg_last_error());	
+        }	
+
+        if (isset($_POST['login'])){
+            $username = $_POST['userName'];
+            $password = $_POST['password'];
+            $SQL = "SELECT UserID, Password FROM Client WHERE UserID='$username' AND Password='$password'";
+
+            $result = pg_query($dbhost, $sql);
+            $count = pg_num_rows($result);
+            if ($count == 1){
+                $_SESSION['username'] = $username;
+                $_SESSION['logged_in'] = true;
+                echo "<h1><center>You have successfully logged in!</center></h1>";
+            } else {
+                echo "<h1>Sorry, invalid username or password.</h1>";
+            }
+        }
       ?>
 
     <!-- Optional JavaScript -->

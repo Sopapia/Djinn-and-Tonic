@@ -39,6 +39,7 @@
      </div>
 
      <?php
+        session_start();
 	      // Make a connection to the database
         // The values here MUST BE CHANGED to match the database and credentials you wish to use
         //$dbhost = pg_connect("host=hostname dbname=databasename user=username password=password");
